@@ -1,4 +1,4 @@
-class Storage {
+export default class Storage {
   static getAllCategories() {
     const savedCategories = JSON.parse(localStorage.getItem("category")) || [];
     return savedCategories.sort((a, b) => {
@@ -29,6 +29,12 @@ class Storage {
         return new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1;
       }
     });
+  }
+
+  static deleteCategory(id){
+    const categories= Storage.getAllCategories();
+    const filteredCategories= categories.filter((c)=> c.id !== parseInt(id));
+    localStorage.setItem("category",JSON.stringify(filteredCategories));
   }
 
   static saveProducts(productToSave) {
