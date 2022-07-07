@@ -2,6 +2,7 @@ import Storage from "./Storage.js";
 
 const addNewProductBtn = document.querySelector("#add-new-product");
 const searchInput = document.querySelector("#search-input");
+const sortProductsList= document.querySelector("#sort-products");
 
 
 class ProductView {
@@ -9,6 +10,7 @@ class ProductView {
     addNewProductBtn.addEventListener("click", (e) => this.addNewProduct(e));
     this.products = [];
     searchInput.addEventListener("input",(e)=> this.searchProducts(e));
+    sortProductsList.addEventListener("change",(e)=> this.sortProducts(e));
   }
 
   addNewProduct(e) {
@@ -73,6 +75,12 @@ class ProductView {
     const value = e.target.value;
     const filteredProducts= this.products.filter((p)=> p.title.toLowerCase().includes(value));
     this.createProductsList(filteredProducts);
+  }
+
+  sortProducts(e){
+    const value = e.target.value;
+    this.products= Storage.getAllProducts(value);
+    this.createProductsList(this.products);
   }
 }
 
