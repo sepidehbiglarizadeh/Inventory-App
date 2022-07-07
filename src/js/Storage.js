@@ -39,7 +39,8 @@ export default class Storage {
 
   static saveProducts(productToSave) {
     const savedProducts = Storage.getAllProducts();
-    const existedItem = savedProducts.find((p) => p.title.toLowerCase() === productToSave.title.toLowerCase());
+    const existedItem = savedProducts.find((p) => p.title.trim().toLowerCase() === productToSave.title.trim().toLowerCase());
+    console.log(existedItem);
     if (existedItem) {
       existedItem.title = productToSave.title;
       existedItem.quantity = productToSave.quantity;
