@@ -39,14 +39,15 @@ export default class Storage {
 
   static saveProducts(productToSave) {
     const savedProducts = Storage.getAllProducts();
-    const existedItem = savedProducts.find((c) => c.id === productToSave.id);
+    const existedItem = savedProducts.find((p) => p.title.toLowerCase() === productToSave.title.toLowerCase());
     if (existedItem) {
       existedItem.title = productToSave.title;
       existedItem.quantity = productToSave.quantity;
       existedItem.category = productToSave.category;
+      existedItem.createdAt = new Date().toISOString();
     } else {
       productToSave.id = new Date().getTime();
-      productToSave.createdAt = new Date().toDateString();
+      productToSave.createdAt = new Date().toISOString();
       savedProducts.push(productToSave);
     }
     localStorage.setItem("product", JSON.stringify(savedProducts));

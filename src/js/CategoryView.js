@@ -13,9 +13,9 @@ class CategoryView {
   constructor() {
     addNewCategoryBtn.addEventListener("click", (e) => this.addNewCategory(e));
     this.categories = [];
-    categoryDOM.addEventListener("click", () =>
-      categoryListWrapper.classList.toggle("hidden")
-    );
+    categoryDOM.addEventListener("click", (e) => {
+      categoryListWrapper.classList.toggle("hidden");
+    });
 
     toggleAddCategoryBtn.addEventListener("click", (e) =>
       this.toggleAddCategory(e)
@@ -46,22 +46,26 @@ class CategoryView {
     this.setApp();
     let result = "";
     this.categories.forEach((c) => {
-      result += `<div class="flex justify-between items-center px-3 mb-1 hover:bg-primarydark" data-id=${c.id}>
-        <span>${c.title}</span>
+      result += `<div class="flex justify-between items-center px-3 mb-1 hover:bg-primarydark category-list-item cursor-pointer">
+        ${c.title}
         <i class="fa-solid fa-xmark cursor-pointer text-red" data-id=${c.id}></i>
       </div>`;
     });
     categoryListWrapper.innerHTML = result;
-    categoryListWrapper.addEventListener("click", (e) => this.removeCategoryListItem(e));
+    categoryListWrapper.addEventListener("click", (e) => {
+      this.removeCategoryListItem(e);
+      document.querySelector("#product-category span").innerText= e.target.innerText;
+      if(e.target.classList.contains("category-list-item")) categoryListWrapper.classList.add("hidden");
+    });
   }
 
-  removeCategoryListItem(e){
+  removeCategoryListItem(e) {
     const item = e.target;
-      const id = item.dataset.id;
-      if (item.classList.contains("fa-xmark")) {
-        Storage.deleteCategory(id);
-        categoryListWrapper.removeChild(item.parentElement);
-      }
+    const id = item.dataset.id;
+    if (item.classList.contains("fa-xmark")) {
+      Storage.deleteCategory(id);
+      categoryListWrapper.removeChild(item.parentElement);
+    }
   }
 
   toggleAddCategory(e) {
