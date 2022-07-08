@@ -932,6 +932,9 @@ select {
   --tw-text-opacity: 1;
   color: rgb(225 29 72 / var(--tw-text-opacity));
 }
+.opacity-50 {
+  opacity: 0.5;
+}
 .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -949,7 +952,6 @@ select {
 .modal {
     position: absolute;
     z-index: 10;
-    
     right: 0;
     left: 0;
     top: -100vh;
@@ -957,12 +959,10 @@ select {
     transition: all 0.5s ease-in-out;
     margin: auto;
   }
-
 .hover\:bg-primarydark:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(228 220 207 / var(--tw-bg-opacity));
 }
-
 @media (min-width: 768px) {
 
   .md\:w-3\/6 {
@@ -983,7 +983,6 @@ select {
     line-height: 1.5rem;
   }
 }
-
 @media (min-width: 1024px) {
 
   .lg\:mb-0 {

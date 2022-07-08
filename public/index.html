@@ -20,13 +20,13 @@
       <h2 class="font-bold text-secondarydark text-lg ">Edit Product</h2>
       <i id="close-modal" class="fa-solid fa-xmark text-2xl cursor-pointer"></i>
     </div>
-    <form action="" class="flex flex-col gap-y-4">
-      <input type="text" class="rounded-xl w-3/6 bg-primarylight" placeholder="Title" />
-      <input type="number" class="rounded-xl w-3/6 bg-primarylight" placeholder="Quantity" />
-      <select name="" id="" class="rounded-xl bg-primarylight mb-4">
-        <option value="" selected disabled>Select a category</option>
+    <form action="#" class="flex flex-col gap-y-4">
+      <input id="modal-title" type="text" class="rounded-xl w-3/6 bg-primarylight" placeholder="Title" />
+      <input id="modal-quantity" type="number" class="rounded-xl w-3/6 bg-primarylight" />
+      <select name="" id="modal-datalist" class="rounded-xl bg-primarylight mb-4">
+        <!-- <option value="" selected disabled>Select a category</option> -->
       </select>
-      <button class="bg-secondarylight p-2 rounded-xl font-bold text-primarylight">Accept</button>
+      <button id="modal-accept-btn" class="bg-secondarylight p-2 rounded-xl font-bold text-primarylight opacity-50" disabled>Accept</button>
     </form>
   </section>
 

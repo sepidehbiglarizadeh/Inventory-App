@@ -2,19 +2,21 @@ import Storage from "./Storage.js";
 
 const addNewProductBtn = document.querySelector("#add-new-product");
 const searchInput = document.querySelector("#search-input");
-const sortProductsList= document.querySelector("#sort-products");
-const modal= document.querySelector(".modal");
-const backDrop= document.querySelector(".backdrop");
-const closeModalBtn= document.querySelector("#close-modal");
+const sortProductsList = document.querySelector("#sort-products");
+const modal = document.querySelector(".modal");
+const backDrop = document.querySelector(".backdrop");
+const closeModalBtn = document.querySelector("#close-modal");
+const modalDatalist = document.querySelector("#modal-datalist");
+const modalAcceptBtn = document.querySelector("#modal-accept-btn");
 
 
 class ProductView {
   constructor() {
     addNewProductBtn.addEventListener("click", (e) => this.addNewProduct(e));
     this.products = [];
-    searchInput.addEventListener("input",(e)=> this.searchProducts(e));
-    sortProductsList.addEventListener("change",(e)=> this.sortProducts(e));
-    closeModalBtn.addEventListener("click",()=> this.closeModal());
+    searchInput.addEventListener("input", (e) => this.searchProducts(e));
+    sortProductsList.addEventListener("change", (e) => this.sortProducts(e));
+    closeModalBtn.addEventListener("click", () => this.closeModal());
   }
 
   addNewProduct(e) {
@@ -26,8 +28,8 @@ class ProductView {
     Storage.saveProducts({ title, quantity, category });
     this.products = Storage.getAllProducts();
     this.createProductsList(this.products);
-    document.querySelector("#product-title").value = " ";
-    document.querySelector("#product-quantity").value = " ";
+    document.querySelector("#product-title").value = "";
+    document.querySelector("#product-quantity").value = "";
   }
 
   setApp() {
@@ -68,14 +70,13 @@ class ProductView {
       btn.addEventListener("click", (e) => this.deleteProduct(e));
     });
 
-    const editBtns= document.querySelectorAll(".edit-product-btn");
-    editBtns.forEach((btn)=>{
-      btn.addEventListener("click",(e)=> {
-        this.editProduct(e)
+    const editBtns = document.querySelectorAll(".edit-product-btn");
+    editBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        this.editProduct(e);
         this.showModal();
       });
     });
-    
   }
 
   deleteProduct(e) {
@@ -85,34 +86,60 @@ class ProductView {
     this.createProductsList(this.products);
   }
 
-  editProduct(e){
-    const productId= e.target.dataset.id;
-    const product=Storage.editProduct(productId);
-    console.log(product);
+  editProduct(e) {
+    const productId = e.target.dataset.id;
+    const product = Storage.editProduct(productId);
+    document.querySelector("#modal-title").value = product.title;
+
+    const categories = Storage.getAllCategories();
+
+    let result = `<option value="" selected disabled>Select a category</option>`;
+    categories.forEach((c) => {
+      result += `<option value${c.title}>${c.title}</option>`;
+    });
+    modalDatalist.innerHTML = result;
+    
+    modalDatalist.addEventListener("change",()=>{
+        modalAcceptBtn.disabled=false
+        modalAcceptBtn.style.opacity="1";
+      });
+
+    modalAcceptBtn.addEventListener("click", () => {
+      product.title = document.querySelector("#modal-title").value;
+      product.quantity = document.querySelector("#modal-quantity").value;
+      product.category = modalDatalist.options[modalDatalist.selectedIndex].text;
+      Storage.saveProducts(product);
+      this.products= Storage.getAllProducts();
+      this.createProductsList(this.products);
+      this.closeModal();
+    });
+
   }
 
-  searchProducts(e){
+  searchProducts(e) {
     const value = e.target.value;
-    const filteredProducts= this.products.filter((p)=> p.title.toLowerCase().includes(value));
+    const filteredProducts = this.products.filter((p) =>
+      p.title.toLowerCase().includes(value)
+    );
     this.createProductsList(filteredProducts);
   }
 
-  sortProducts(e){
+  sortProducts(e) {
     const value = e.target.value;
-    this.products= Storage.getAllProducts(value);
+    this.products = Storage.getAllProducts(value);
     this.createProductsList(this.products);
   }
 
-  showModal(){
-    modal.style.opacity= "1";
+  showModal() {
+    modal.style.opacity = "1";
     modal.style.transform = "translateY(120vh)";
-    backDrop.style.display ="block"; 
+    backDrop.style.display = "block";
   }
 
-  closeModal(){
-    modal.style.opacity="0";
-    modal.style.transform= "translateY(-100vh)";
-    backDrop.style.display= "none";
+  closeModal() {
+    modal.style.opacity = "0";
+    modal.style.transform = "translateY(-100vh)";
+    backDrop.style.display = "none";
   }
 }
 
