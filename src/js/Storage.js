@@ -59,4 +59,9 @@ export default class Storage {
     const filteredProducts = savedProducts.filter((p) => p.id !== parseInt(id));
     localStorage.setItem("product", JSON.stringify(filteredProducts));
   }
+
+  static editProduct(id){
+    const savedProducts= Storage.getAllProducts();
+    return savedProducts.find((p)=> p.id === parseInt(id));
+  }
 }

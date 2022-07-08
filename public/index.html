@@ -13,11 +13,30 @@
 </head>
 
 <body>
+  <!-- modal section-->
+  <div class="backdrop"></div>
+  <section class="w-full md:w-3/6 bg-primarylight rounded-xl p-8 modal">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="font-bold text-secondarydark text-lg ">Edit Product</h2>
+      <i id="close-modal" class="fa-solid fa-xmark text-2xl cursor-pointer"></i>
+    </div>
+    <form action="" class="flex flex-col gap-y-4">
+      <input type="text" class="rounded-xl w-3/6 bg-primarylight" placeholder="Title" />
+      <input type="number" class="rounded-xl w-3/6 bg-primarylight" placeholder="Quantity" />
+      <select name="" id="" class="rounded-xl bg-primarylight mb-4">
+        <option value="" selected disabled>Select a category</option>
+      </select>
+      <button class="bg-secondarylight p-2 rounded-xl font-bold text-primarylight">Accept</button>
+    </form>
+  </section>
+
   <div
-    class="bg-secondarydark lg:h-screen bg-[url('/assets/images/1.png')] bg-no-repeat bg-left-bottom bg-[length:25%]">
+    class="bg-secondarydark min-h-screen lg:h-screen bg-[url('/assets/images/1.png')] bg-no-repeat bg-left-bottom bg-[length:50%] lg:bg-[length:20%]">
+    <!-- header Section -->
     <header class="bg-secondarylight flex items-center justify-center py-1">
       <h1 class="font-bold md:text-xl">Inventory App Using Tailwind & JS</h1>
     </header>
+    <!-- main Section -->
     <main
       class="container max-w-screen-sm md:max-w-screen-xl mx-auto flex flex-col lg:flex-row justify-between gap-x-5 lg:h-[85vh] pt-[4%] p-2">
       <!-- Sidebar -->
@@ -63,7 +82,8 @@
             </div>
             <div>
               <label for="product-quantity" class="block mb-1">Quantity</label>
-              <input id="product-quantity" type="text" class="bg-primarylight rounded-xl w-1/2 border-secondarydark" />
+              <input id="product-quantity" type="number"
+                class="bg-primarylight rounded-xl w-1/2 border-secondarydark" />
             </div>
             <div>
               <label for="product-category" class="block mb-1">Category</label>
@@ -75,7 +95,7 @@
                   <i class="fa-solid fa-chevron-down text-secondarydark"></i>
                 </div>
                 <div id="category-list-wrapper"
-                  class="hidden absolute top-13 border border-secondarydark bg-primarylight w-full max-h-28 overflow-auto z-20">
+                  class="hidden absolute top-13 border border-secondarydark bg-primarylight w-full max-h-28 overflow-auto z-2">
                   <!-- <div class="flex justify-between items-center px-3 mb-1 hover:bg-primarydark ">
                       Clothes
                       <i class="fa-solid fa-xmark cursor-pointer text-red"></i>
@@ -100,7 +120,8 @@
               class="bg-primarylight rounded-xl border-secondarydark w-full" placeholder="Search" />
           </div>
           <div>
-            <select name="sort-products" id="sort-products" class="bg-primarylight rounded-xl border-secondarydark cursor-pointer">
+            <select name="sort-products" id="sort-products"
+              class="bg-primarylight rounded-xl border-secondarydark cursor-pointer">
               <option value="newest" selected>Newest</option>
               <option value="oldest">Oldest</option>
             </select>
@@ -121,11 +142,17 @@
         <table id="products-list" class="table-auto w-full text-xs md:text-base">
           <!-- <tr class="border-b border-secondarylight">
               <td class="p-2 w-[10%]">1</td>
-              <td class="p- capitalize font-bold w-[30%]">trousers</td>
-              <td class="p-2 w-[15%]">Aug 22</td>
-              <td class="p-2 w-[15%]">Clothes</td>
-              <td class="p-2 w-[15%]">2</td>
-              <td class="p-2 w-[15%] ">
+              <td class="p-2 capitalize font-bold w-[25%] editable-text">
+                Trousers
+              </td>
+              <td class="p-2 w-[20%]">Aug 22</td>
+              <td class="p-2 w-[25%] editable-text">
+                Clothes
+              </td>
+              <td class="p-2 w-[10%] editable-text">
+                2
+              </td>
+              <td class="p-2 w-[10%] ">
                 <i
                   class="fa-solid fa-pen-to-square mr-2 text-secondarydark cursor-pointer"
                 ></i>
@@ -136,6 +163,8 @@
       </section>
     </main>
   </div>
+
+
 
   <script src="/src/js/app.js" type="module"></script>
 </body>

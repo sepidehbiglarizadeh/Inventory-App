@@ -3,6 +3,9 @@ import Storage from "./Storage.js";
 const addNewProductBtn = document.querySelector("#add-new-product");
 const searchInput = document.querySelector("#search-input");
 const sortProductsList= document.querySelector("#sort-products");
+const modal= document.querySelector(".modal");
+const backDrop= document.querySelector(".backdrop");
+const closeModalBtn= document.querySelector("#close-modal");
 
 
 class ProductView {
@@ -11,6 +14,7 @@ class ProductView {
     this.products = [];
     searchInput.addEventListener("input",(e)=> this.searchProducts(e));
     sortProductsList.addEventListener("change",(e)=> this.sortProducts(e));
+    closeModalBtn.addEventListener("click",()=> this.closeModal());
   }
 
   addNewProduct(e) {
@@ -47,10 +51,10 @@ class ProductView {
       <td class="py-2 w-[25%]">${selectedCategory.title}</td>
       <td class="py-2 w-[10%]">${p.quantity}</td>
       <td class="py-2 w-[10%]">
-        <i class="fa-solid fa-pen-to-square mr-2 text-secondarydark cursor-pointer" data-id=${
+        <i class="fa-solid fa-pen-to-square mr-2 text-secondarydark cursor-pointer edit-product-btn" data-id=${
           p.id
         }></i>
-        <i class="fa-solid fa-trash-can text-red cursor-pointer delete-product" data-id=${
+        <i class="fa-solid fa-trash-can text-red cursor-pointer delete-product-btn" data-id=${
           p.id
         }></i>
       </td>
@@ -58,10 +62,20 @@ class ProductView {
     });
     const productDom = document.querySelector("#products-list");
     productDom.innerHTML = result;
-    const deleteBtns = [...document.querySelectorAll(".delete-product")];
+
+    const deleteBtns = [...document.querySelectorAll(".delete-product-btn")];
     deleteBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => this.deleteProduct(e));
     });
+
+    const editBtns= document.querySelectorAll(".edit-product-btn");
+    editBtns.forEach((btn)=>{
+      btn.addEventListener("click",(e)=> {
+        this.editProduct(e)
+        this.showModal();
+      });
+    });
+    
   }
 
   deleteProduct(e) {
@@ -69,6 +83,12 @@ class ProductView {
     Storage.deleteProduct(productId);
     this.products = Storage.getAllProducts();
     this.createProductsList(this.products);
+  }
+
+  editProduct(e){
+    const productId= e.target.dataset.id;
+    const product=Storage.editProduct(productId);
+    console.log(product);
   }
 
   searchProducts(e){
@@ -81,6 +101,18 @@ class ProductView {
     const value = e.target.value;
     this.products= Storage.getAllProducts(value);
     this.createProductsList(this.products);
+  }
+
+  showModal(){
+    modal.style.opacity= "1";
+    modal.style.transform = "translateY(120vh)";
+    backDrop.style.display ="block"; 
+  }
+
+  closeModal(){
+    modal.style.opacity="0";
+    modal.style.transform= "translateY(-100vh)";
+    backDrop.style.display= "none";
   }
 }
 
